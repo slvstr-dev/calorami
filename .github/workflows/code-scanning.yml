@@ -1,4 +1,4 @@
-name: Code Scanning
+name: Code scanning
 
 on:
   pull_request:
