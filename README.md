@@ -1,68 +1,58 @@
-# Calorami
+# Turborepo Tailwind CSS starter
 
-**Calorami** is your friendly calorie tracker and nutrition companion. Our app helps you manage your dietary intake with ease, offering intuitive tracking and insightful guidance to support a healthier lifestyle.
+This is an official starter Turborepo.
 
-## Features
+## Using this example
 
-### Planned Features
+Run the following command:
 
-- **Nutritional Insights**: Get detailed nutritional information from the Open Food Facts database.
-- **Easy Calorie Tracking**: Log your meals and monitor your calorie intake effortlessly.
-- **Personalized Goals**: Set and achieve your personalized dietary goals.
-- **User-Friendly Interface**: Enjoy a clean, intuitive design that makes tracking a breeze.
-- **Daily and Weekly Reports**: Review your progress with comprehensive reports and statistics.
+```sh
+npx create-turbo@latest -e with-tailwind
+```
 
-## Open Food Facts Integration
+## What's inside?
 
-**Calorami** integrates with the [Open Food Facts](https://world.openfoodfacts.org) database to provide accurate nutritional information. This integration allows you to:
+This Turborepo includes the following packages/apps:
 
-- Access a vast database of food products with detailed nutritional data.
-- Search for products and retrieve information directly from Open Food Facts.
+### Apps and Packages
 
-## Getting Started
+- `docs`: a [Next.js](https://nextjs.org/) app with [Tailwind CSS](https://tailwindcss.com/)
+- `web`: another [Next.js](https://nextjs.org/) app with [Tailwind CSS](https://tailwindcss.com/)
+- `ui`: a stub React component library with [Tailwind CSS](https://tailwindcss.com/) shared by both `web` and `docs` applications
+- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
+- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
 
-To get started with **Calorami**, follow these steps:
+Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
 
-1. **Clone the Repository**:
+### Building packages/ui
 
-   ```bash
-   git clone https://github.com/your-username/calorami.git
-   ```
+This example is set up to produce compiled styles for `ui` components into the `dist` directory. The component `.tsx` files are consumed by the Next.js apps directly using `transpilePackages` in `next.config.js`. This was chosen for several reasons:
 
-2. **Navigate to the Project Directory**:
+- Make sharing one `tailwind.config.js` to apps and packages as easy as possible.
+- Make package compilation simple by only depending on the Next.js Compiler and `tailwindcss`.
+- Ensure Tailwind classes do not overwrite each other. The `ui` package uses a `ui-` prefix for it's classes.
+- Maintain clear package export boundaries.
 
-   ```bash
-   cd calorami
-   ```
+Another option is to consume `packages/ui` directly from source without building. If using this option, you will need to update the `tailwind.config.js` in your apps to be aware of your package locations, so it can find all usages of the `tailwindcss` class names for CSS compilation.
 
-3. **Install Dependencies**:
-   Use `pnpm` to install the required dependencies:
+For example, in [tailwind.config.js](packages/tailwind-config/tailwind.config.js):
 
-   ```bash
-   pnpm install
-   ```
+```js
+  content: [
+    // app content
+    `src/**/*.{js,ts,jsx,tsx}`,
+    // include packages if not transpiling
+    "../../packages/ui/*.{js,ts,jsx,tsx}",
+  ],
+```
 
-4. **Set Up Open Food Facts API**:
+If you choose this strategy, you can remove the `tailwindcss` and `autoprefixer` dependencies from the `ui` package.
 
-   - Obtain an API key if necessary (check Open Food Facts documentation).
-   - Configure your environment variables to include your API key and any other required settings.
+### Utilities
 
-5. **Run the Application**:
-   To start the application locally:
+This Turborepo has some additional tools already setup for you:
 
-   ```bash
-   pnpm start
-   ```
-
-6. **Access the App**:
-   Open your web browser and go to `http://localhost:3000` (or the appropriate port).
-
-## License
-
-**Calorami** is licensed under the GNU General Public License (GPL) v3.0. See the [LICENSE](LICENSE) file for details.
-
-The data and images provided by Open Food Facts are subject to their respective licenses:
-
-- **Open Food Facts Database**: [Open Database License (ODbL)](https://opendatacommons.org/licenses/odbl/)
-- **Database Contents**: [Database Contents License](https://world.openfoodfacts.org/terms-of-use)
-- **Product Images**: [Creative Commons Attribution-ShareAlike (CC BY-SA)](https://creativecommons.org/licenses/by-sa/4.0/)
+- [Tailwind CSS](https://tailwindcss.com/) for styles
+- [TypeScript](https://www.typescriptlang.org/) for static type checking
+- [ESLint](https://eslint.org/) for code linting
+- [Prettier](https://prettier.io) for code formatting
