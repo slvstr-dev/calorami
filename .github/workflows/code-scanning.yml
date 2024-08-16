@@ -1,4 +1,4 @@
-name: Continuous Integration
+name: Code Scanning
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     types: [opened, synchronize]
 
 jobs:
-  ci:
+  code-scanning:
     timeout-minutes: 15
     runs-on: ubuntu-latest
     env:
@@ -33,5 +33,11 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Build
-        run: pnpm build
+      - name: Check types
+        run: pnpm run type-check
+
+      - name: Check format
+        run: pnpm run format
+
+      - name: Check linting
+        run: pnpm run lint
