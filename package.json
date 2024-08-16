@@ -1,11 +1,6 @@
 {
   "name": "calorami",
   "version": "0.0.1",
-  "author": {
-    "name": "Sylvester",
-    "email": "hello@slvstr.dev",
-    "url": "https://slvstr.dev"
-  },
   "private": true,
   "scripts": {
     "dev": "turbo dev",
